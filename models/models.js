@@ -22,6 +22,8 @@ const Needed = sequelize.define("needed", {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 	firstName: { type: DataTypes.STRING, allowNull: false },
 	secondName: { type: DataTypes.STRING, allowNull: false },
+	age: { type: DataTypes.STRING, allowNull: false },
+	place: { type: DataTypes.STRING, allowNull: false },
 	totalSum: { type: DataTypes.STRING, allowNull: false },
 	remainSum: { type: DataTypes.STRING, allowNull: false },
 	img: { type: DataTypes.STRING },

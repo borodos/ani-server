@@ -16,8 +16,8 @@ const generateJwt = (id, email, role, firstName, secondName) => {
 class NeededController {
 	async create(req, res, next) {
 		// -- Из запроса получаем email и пароль
-		const { firstName, secondName, totalSum, remainSum } = req.body;
-		console.log(req.files);
+		const { firstName, secondName, age, place, totalSum, remainSum } = req.body;
+
 		// -- Проверка, существует ли пользователь с таким email в системе
 		const candidate = await Needed.findOne({
 			where: { firstName, secondName },
@@ -26,26 +26,28 @@ class NeededController {
 			return next(ApiError.badRequest("Такой пользователь уже существует"));
 		}
 
-		// const { img } = req.files;
-		// let fileName = uuid.v4() + ".jpg";
-		// img.mv(path.resolve(__dirname, "..", "static", fileName));
+		const { img } = req.files;
+		let fileName = uuid.v4() + ".jpg";
+		img.mv(path.resolve(__dirname, "..", "static", fileName));
 
 		// -- Создание пользователя
-		// const needed = await Needed.create({
-		// 	firstName,
-		// 	secondName,
-		// 	totalSum,
-		// 	remainSum,
-		// 	img,
-		// });
+		const needed = await Needed.create({
+			firstName,
+			secondName,
+			age,
+			place,
+			totalSum,
+			remainSum,
+			img: fileName,
+		});
 
-		// return res.json({ needed });
+		return res.json({ needed });
 	}
 
 	async getAll(req, res, next) {
 		const neededs = await Needed.findAll();
 
-		return res.json({ neededs });
+		return res.json(neededs);
 	}
 }
 
